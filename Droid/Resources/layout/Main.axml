@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <EditText
-        android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ChatInput" />
-    <Button
-        android:id="@+id/ChatButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Send Chat!" />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/ChatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:text="Enviar" />
+        <EditText
+            android:id="@+id/ChatInput"
+            android:layout_toLeftOf="@id/ChatButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" />
+    </RelativeLayout>
     <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ChatMessages" />
+        android:id="@+id/ChatMessages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

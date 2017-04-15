@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/TextValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:padding="8dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        android:paddingTop="8dp"
+        android:paddingRight="0dp"
+        android:paddingLeft="8dp">
+        <TextView
+            android:text="Tamaño:"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/TextSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="0dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="0dp"
+        android:paddingLeft="8dp">
+        <TextView
+            android:text="Delay:"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/TextDelay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using UIKit;
 using Foundation;
+using XamarinSignalR;
 
 namespace XamarinSignalR.iOS
 {
+
 	public class MessagesDataSource : UITableViewSource
 	{
 
-		List<string> Messages;
-		string CellIdentifier = "TableCell";
+		List<Response> Messages;
+		string CellIdentifier = ResponseEntryCell.Key;
 
-		public MessagesDataSource()
+		public MessagesDataSource(UITableView tableView)
 		{
-			Messages = new List<string>();
+			Messages = new List<Response>();
+			tableView.RegisterNibForCellReuse(ResponseEntryCell.Nib, CellIdentifier);
+			tableView.Source = this;
 		}
 
-		public void Add(string message)
+		public void Add(Response message)
 		{
-			Messages.Add(message);
+			Messages.Insert(0, message);
 		}
 
 		public override nint RowsInSection(UITableView tableview, nint section)
@@ -28,19 +32,28 @@ namespace XamarinSignalR.iOS
 
 		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
 		{
-			UITableViewCell cell = tableView.DequeueReusableCell(CellIdentifier);
-			string item = Messages[indexPath.Row];
+			ResponseEntryCell cell = (ResponseEntryCell) tableView.DequeueReusableCell(CellIdentifier);
+			Response item = Messages[indexPath.Row];
 
 			//---- if there are no cells to reuse, create a new one
 			if (cell == null)
-			{ 
-				cell = new UITableViewCell(UITableViewCellStyle.Default, CellIdentifier); 
+			{
+				cell = ResponseEntryCell.Create();
 			}
 
-			cell.TextLabel.Text = item;
-
+			cell.Update(item);
 			return cell;
 		}
-		
+
+		public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
+		{
+			return UITableView.AutomaticDimension;
+		}
+
+		public override nfloat EstimatedHeight(UITableView tableView, NSIndexPath indexPath)
+		{
+			return 80;
+		}
+
 	}
 }

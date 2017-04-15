@@ -11,7 +11,7 @@ namespace XamarinSignalR.iOS
 	{
 		private SignalConnector Connector;
 
-		private MessagesDataSource source = new MessagesDataSource();
+		private MessagesDataSource source;
 
 		public ViewController(IntPtr handle) : base(handle)
 		{
@@ -21,14 +21,15 @@ namespace XamarinSignalR.iOS
 		{
 			base.ViewDidLoad();
 
-			Connector = new SignalConnector("iOS",(name, message) => InvokeOnMainThread ( () => {
-				// manipulate UI controls
-				source.Add( string.Format("{0}: {1}",name, message));
+			source = new MessagesDataSource(TableView);
+
+			Connector = new SignalConnector((Response response) => InvokeOnMainThread(() =>
+			{
+				source.Add( response);
 				TableView.ReloadData();
 			}));
-			Connector.JoinChat();
 
-			TableView.Source = source;
+			Connector.JoinChat();
 
 
 			SendButton.TouchDown += (sender, e) =>
@@ -38,7 +39,19 @@ namespace XamarinSignalR.iOS
 
                 Connector.Send(MessageTextField.Text);
 				MessageTextField.Text = "";
+				MessageTextField.ResignFirstResponder();
 			};
+
+			MessageTextField.Delegate = new TextDelegate();
+		}
+
+		class TextDelegate : UITextFieldDelegate
+		{
+			public override bool ShouldReturn(UITextField textField)
+			{
+				textField.ResignFirstResponder();
+				return true;
+			}
 
 		}
 

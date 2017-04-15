@@ -24,13 +24,14 @@ namespace XamarinSignalR.Droid
 			var input = FindViewById<EditText>(Resource.Id.ChatInput);
 			var messages = FindViewById<ListView>(Resource.Id.ChatMessages);
 
-			var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, new List<string>());
+			var adapter = new ResponseAdapter(this);
 			messages.Adapter = adapter;
 
-			Connector = new SignalConnector("iOS",(name, message) => RunOnUiThread(() =>
+			Connector = new SignalConnector((Response response) => RunOnUiThread(() =>
 			{
-				adapter.Add(string.Format("{0}: {1}", name, message));
+				adapter.Add(response);
 			}));
+
 			Connector.JoinChat();
 
 			Button button = FindViewById<Button>(Resource.Id.ChatButton);
